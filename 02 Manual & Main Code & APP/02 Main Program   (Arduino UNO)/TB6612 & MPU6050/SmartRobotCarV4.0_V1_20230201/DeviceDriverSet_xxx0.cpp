@@ -518,3 +518,39 @@ void DeviceDriverSet_IRrecv::DeviceDriverSet_IRrecv_Test(void)
   }
 }
 #endif
+
+/*DFPlayerMini*/
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+DFPlayerMini dfPlayerMini(DF_PLAYER_RX_PIN, DF_PLAYER_TX_PIN); // create the MP3 player object
+void DeviceDriverSet_DFPlayerMini::DeviceDriverSet_DFPlayerMini_Init(void)
+{
+  dfPlayerMini.setup_DFPlayer_Mini();
+}
+void DeviceDriverSet_DFPlayerMini::DeviceDriverSet_DFPlayerMini_Play_On_Switch_On()
+{
+  dfPlayerMini.play_mp3(8); // play 0008*.mp3 in mp3 folder
+}
+void DeviceDriverSet_DFPlayerMini::DeviceDriverSet_DFPlayerMini_Play_On_Obstacle_Encounter()
+{
+  dfPlayerMini.play_mp3(1); // play 0001*.mp3 in mp3 folder
+}
+void DeviceDriverSet_DFPlayerMini::DeviceDriverSet_DFPlayerMini_Play_On_Obstacle_Mode()
+{
+  dfPlayerMini.play_mp3(4); // play 0004*.mp3 in mp3 folder
+}
+void DeviceDriverSet_DFPlayerMini::DeviceDriverSet_DFPlayerMini_Play_On_Tracking_Mode()
+{
+  dfPlayerMini.play_mp3(3); // play 0003*.mp3 in mp3 folder
+}
+void DeviceDriverSet_DFPlayerMini::DeviceDriverSet_DFPlayerMini_Play_On_Rocker_Mode()
+{
+  dfPlayerMini.play_mp3(2); // play 0002*.mp3 in mp3 folder
+}
+#if _Test_DeviceDriverSet
+void DeviceDriverSet_DFPlayerMini::DeviceDriverSet_DFPlayerMini_Test(void)
+{
+  dfPlayerMini.play_mp3(1);
+  dfPlayerMini.query_status();
+}
+#endif
+#endif

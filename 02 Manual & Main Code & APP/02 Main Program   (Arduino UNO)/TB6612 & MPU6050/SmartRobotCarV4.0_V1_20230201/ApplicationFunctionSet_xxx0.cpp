@@ -32,6 +32,9 @@ DeviceDriverSet_Motor AppMotor;
 DeviceDriverSet_ULTRASONIC AppULTRASONIC;
 DeviceDriverSet_Servo AppServo;
 DeviceDriverSet_IRrecv AppIRrecv;
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+DeviceDriverSet_DFPlayerMini AppMp3Player;
+#endif
 /*f(x) int */
 static boolean
 function_xxx(long x, long s, long e) //f(x)
@@ -115,12 +118,17 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Init(void)
   AppITR20001.DeviceDriverSet_ITR20001_Init();
   res_error = AppMPU6050getdata.MPU6050_dveInit();
   AppMPU6050getdata.MPU6050_calibration();
-
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+  AppMp3Player.DeviceDriverSet_DFPlayerMini_Init();
+#endif
   // while (Serial.read() >= 0)
   // {
   //   /*Clear serial port buffer...*/
   // }
   Application_SmartRobotCarxxx0.Functional_Mode = Standby_mode;
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+  AppMp3Player.DeviceDriverSet_DFPlayerMini_Play_On_Switch_On();
+#endif
 }
 
 /*ITR20001 Check if the car leaves the ground*/
@@ -661,6 +669,9 @@ void ApplicationFunctionSet::ApplicationFunctionSet_Obstacle(void)
     if (function_xxx(get_Distance, 0, 20))
     {
       ApplicationFunctionSet_SmartRobotCarMotionControl(stop_it, 0);
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+      AppMp3Player.DeviceDriverSet_DFPlayerMini_Play_On_Obstacle_Encounter();
+#endif
 
       for (uint8_t i = 1; i < 6; i += 2) //1、3、5 Omnidirectional detection of obstacle avoidance status
       {
@@ -1635,10 +1646,16 @@ void ApplicationFunctionSet::ApplicationFunctionSet_KeyCommand(void)
     case /* constant-expression */ 1:
       /* code */
       Application_SmartRobotCarxxx0.Functional_Mode = TraceBased_mode;
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+      AppMp3Player.DeviceDriverSet_DFPlayerMini_Play_On_Tracking_Mode();
+#endif
       break;
     case /* constant-expression */ 2:
       /* code */
       Application_SmartRobotCarxxx0.Functional_Mode = ObstacleAvoidance_mode;
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+      AppMp3Player.DeviceDriverSet_DFPlayerMini_Play_On_Obstacle_Mode();
+#endif
       break;
     case /* constant-expression */ 3:
       /* code */
@@ -1690,9 +1707,15 @@ void ApplicationFunctionSet::ApplicationFunctionSet_IRrecv(void)
       break;
     case /* constant-expression */ 6:
       /* code */ Application_SmartRobotCarxxx0.Functional_Mode = TraceBased_mode;
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+      AppMp3Player.DeviceDriverSet_DFPlayerMini_Play_On_Tracking_Mode();
+#endif
       break;
     case /* constant-expression */ 7:
       /* code */ Application_SmartRobotCarxxx0.Functional_Mode = ObstacleAvoidance_mode;
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+      AppMp3Player.DeviceDriverSet_DFPlayerMini_Play_On_Obstacle_Mode();
+#endif
       break;
     case /* constant-expression */ 8:
       /* code */ Application_SmartRobotCarxxx0.Functional_Mode = Follow_mode;
@@ -1753,6 +1776,9 @@ void ApplicationFunctionSet::ApplicationFunctionSet_IRrecv(void)
     if (IRrecv_button < 5)
     {
       Application_SmartRobotCarxxx0.Functional_Mode = Rocker_mode;
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+      AppMp3Player.DeviceDriverSet_DFPlayerMini_Play_On_Rocker_Mode();
+#endif
       if (millis() - AppIRrecv.IR_PreMillis > 300)
       {
         IRrecv_en = false;
@@ -1982,6 +2008,9 @@ void ApplicationFunctionSet::ApplicationFunctionSet_SerialPortDataAnalysis(void)
         break;
       case 102: /*<Command：N 102> :Rocker control mode command*/
         Application_SmartRobotCarxxx0.Functional_Mode = Rocker_mode;
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+        AppMp3Player.DeviceDriverSet_DFPlayerMini_Play_On_Rocker_Mode();
+#endif
         Rocker_temp = doc["D1"];
         Rocker_CarSpeed = doc["D2"];
         

@@ -152,6 +152,7 @@ private:
 #define PIN_Servo_z 10
 #define PIN_Servo_y 11
 };
+
 /*IRrecv*/
 #include "IRremote.h"
 class DeviceDriverSet_IRrecv
@@ -204,5 +205,29 @@ private:
   // #define bRECV_0 465573243
   // #define bRECV_ # 1053031451
 };
+
+/*DFPlayerMini*/
+#if defined(__AVR_ATmega2560__)
+#define _DF_PLAYER_MINI_ACTIVE_
+#endif
+#if defined(_DF_PLAYER_MINI_ACTIVE_)
+#include "DFPlayerMini.h"
+class DeviceDriverSet_DFPlayerMini
+{
+public:
+  void DeviceDriverSet_DFPlayerMini_Init(void);
+  void DeviceDriverSet_DFPlayerMini_Play_On_Switch_On();
+  void DeviceDriverSet_DFPlayerMini_Play_On_Obstacle_Encounter();
+  void DeviceDriverSet_DFPlayerMini_Play_On_Obstacle_Mode();
+  void DeviceDriverSet_DFPlayerMini_Play_On_Tracking_Mode();
+  void DeviceDriverSet_DFPlayerMini_Play_On_Rocker_Mode();
+  void DeviceDriverSet_DFPlayerMini_Test(void);
+
+private:
+// RX, TX on Mega2560 when using it on the Elegoo Smart Robot Car Kit V4.0
+#define DF_PLAYER_RX_PIN 51
+#define DF_PLAYER_TX_PIN 53
+};
+#endif
 
 #endif
