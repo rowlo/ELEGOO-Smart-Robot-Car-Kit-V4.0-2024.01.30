@@ -18,7 +18,7 @@ The robot car needs sound. Hence, the first addition is an [AZ-Delivery DFPlayer
 - Specific sound on self driving activated
 
 ### Adding Sound using a DFPlayer Mini Master Module
-Since we're Futurama fans I've downloaded some sounds of Fry, Leela and Bender from [https://www.101soundboards.com](https://www.101soundboards.com) to be used for the events. The files need to be put an an SD card into the folder "mp3".
+Since we're Futurama fans I've downloaded some sounds of Fry, Leela and Bender from [https://www.101soundboards.com](https://www.101soundboards.com) to be used for the events. The files need to be put on an SD card into the folder "mp3".
 - Greet on switched on: 0008leel.mp3 (Yes, the system works)
 - Honk on obstacle encountered: 0001honk.mp3
 - Specific sound on obstacle avoidance activated: 0004bend.mp3 (I'm unstoppable)
